@@ -1,2 +1,2 @@
-# symfony-helpers
-Symfony Helpers
+# sharepoint-sdk
+Sharepoint SDK 
