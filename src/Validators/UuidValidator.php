@@ -15,7 +15,7 @@ class UuidValidator
 
         // Check if the salutation is valid
         if(preg_match( $validateRegex, $uuid, $matches ) !== 1 ) {
-            throw new \Exception(sprintf('Uuid %s is not valid', $uuid));
+            throw new \Exception(sprintf('Uuid %s is not valid', $uuid), 400);
         }
         return true;
     }

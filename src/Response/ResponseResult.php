@@ -1,5 +1,4 @@
 <?php declare(strict_types=1);
-
 namespace GWSN\Helpers\Response;
 
 class ResponseResult

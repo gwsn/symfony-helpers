@@ -33,6 +33,7 @@ class StringValidateTest extends TestCase
 
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('username does not exist');
+        $this->expectExceptionCode(400);
 
         StringValidate::validate('username', $accountArray, true);
     }
@@ -43,6 +44,7 @@ class StringValidateTest extends TestCase
 
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Invalid username');
+        $this->expectExceptionCode(400);
 
         StringValidate::validate('username', $accountArray, true);
     }

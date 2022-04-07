@@ -51,6 +51,7 @@ class PasswordValidateTest extends TestCase
         } else {
             $this->expectException(Exception::class);
             $this->expectExceptionMessage('Password not valid');
+            $this->expectExceptionCode(400);
             PasswordValidate::validate($password, 8);
         }
 

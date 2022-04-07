@@ -23,6 +23,7 @@ class UuidValidatorTest extends TestCase
 
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage(sprintf('Uuid %s is not valid', $uuid));
+        $this->expectExceptionCode(400);
 
         UuidValidator::validate($uuid);
     }

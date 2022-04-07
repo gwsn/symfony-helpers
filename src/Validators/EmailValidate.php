@@ -19,11 +19,11 @@ class EmailValidate
             return true;
         }
         if($required && !key_exists($key, $source)) {
-            throw new \Exception($key . ' does not exist');
+            throw new \Exception($key . ' does not exist', 400);
         }
         if(! filter_var($source[$key], FILTER_VALIDATE_EMAIL))
         {
-            throw new \Exception('Invalid ' . $key);
+            throw new \Exception('Invalid ' . $key, 400);
         }
         return true;
     }

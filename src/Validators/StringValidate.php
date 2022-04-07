@@ -23,11 +23,11 @@ class StringValidate
             return true;
         }
         if($required && (!key_exists($key, $source) || $source[$key] === null )) {
-            throw new \Exception($key . ' does not exist');
+            throw new \Exception($key . ' does not exist', 400);
         }
         if(! (preg_match( $validateRegex, $source[$key], $matches ) === 1))
         {
-            throw new \Exception('Invalid ' . $key);
+            throw new \Exception('Invalid ' . $key, 400);
         }
 
         // Check if the String is valid
