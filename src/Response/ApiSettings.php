@@ -5,7 +5,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 
 class ApiSettings
 {
-    const APP_NAME = 'APP_NAME';
+    const APP_NAME = 'application_name';
     const APP_VERSION = 'application_version';
     const API_VERSION = 'API_VERSION';
 
