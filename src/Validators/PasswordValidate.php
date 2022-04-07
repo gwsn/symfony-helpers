@@ -19,7 +19,7 @@ class PasswordValidate
         $specialChars = preg_match('/[^\w]/', $password);
 
         if(!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < $length) {
-            throw new Exception('Password not valid');
+            throw new Exception('Password not valid', 400);
         }
 
         return true;

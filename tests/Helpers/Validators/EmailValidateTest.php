@@ -32,6 +32,7 @@ class EmailValidateTest extends TestCase
 
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('email does not exist');
+        $this->expectExceptionCode(400);
 
         EmailValidate::validate('email', $accountArray, true);
     }
@@ -42,6 +43,7 @@ class EmailValidateTest extends TestCase
 
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Invalid email');
+        $this->expectExceptionCode(400);
 
         EmailValidate::validate('email', $accountArray, true);
     }

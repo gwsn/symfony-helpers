@@ -3,6 +3,7 @@
 namespace UnitTests\GWSN\Helpers\Response;
 
 use GWSN\Helpers\Response\ApiResponse;
+use GWSN\Helpers\Response\ApiSettings;
 use GWSN\Helpers\Response\ResponseResult;
 use PHPUnit\Framework\TestCase;
 
@@ -32,12 +33,14 @@ class ApiResponseTest extends TestCase
     public function setUp():void {
         $this->responseResult = new ResponseResult();
 
+        $this->apiSettings = new ApiSettings(null);
+
         $this->statusCode = 200;
 
         $this->metadataDefaults = [
-            'version' => '1.0.0',
-            'api' => 'Batch System API',
-            'auth' => 'V1',
+            'version' => $this->apiSettings->getApplicationVersion(),
+            'api' => $this->apiSettings->getApplicationName(),
+            'auth' => $this->apiSettings->getApplicationAuthVersion(),
             'success' => true,
             'error' =>  null,
         ];
