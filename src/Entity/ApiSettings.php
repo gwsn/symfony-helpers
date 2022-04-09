@@ -1,5 +1,5 @@
 <?php declare(strict_types=1);
-namespace GWSN\Helpers\Response;
+namespace GWSN\Helpers\Entity;
 
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 

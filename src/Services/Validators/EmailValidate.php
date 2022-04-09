@@ -1,5 +1,5 @@
 <?php
-namespace GWSN\Helpers\Validators;
+namespace GWSN\Helpers\Services\Validators;
 
 
 class EmailValidate

@@ -1,6 +1,9 @@
 <?php declare(strict_types=1);
 namespace GWSN\Helpers\Response;
 
+/**
+ * @deprecated please use GWSN\Helpers\Entity\ResponseMetadata or GWSN\Helpers\Services\Response\ApiResponse instead
+ */
 class ResponseResult
 {
     /**
@@ -97,7 +100,7 @@ class ResponseResult
         $this->errorMessage = $errorMessage;
         return $this;
     }
-    //End of Getters and Setters
+
 
     /**
      * @return array[]

@@ -1,5 +1,5 @@
 <?php declare(strict_types=1);
-namespace GWSN\Helpers\Validators;
+namespace GWSN\Helpers\Services\Validators;
 
 class UuidValidator
 {
