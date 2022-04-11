@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ResponseMetadata
 {
+    public ?int $total = null;
     public array $customMetadata;
     public ApiSettings $apiSettings;
 
@@ -20,14 +21,31 @@ class ResponseMetadata
      * @param ApiSettings|null $apiSettings
      */
     public function __construct(
-        array       $metadata = [],
-        ApiSettings $apiSettings = null
+        ApiSettings $apiSettings,
+        array       $metadata = []
     )
     {
         $this->setCustomMetadata($metadata);
-        $this->setApiSettings(($apiSettings ?? $this->apiSettings = new ApiSettings(null)));
+        $this->setApiSettings($apiSettings);
     }
 
+    /**
+     * @return int|null
+     */
+    public function getTotal(): ?int
+    {
+        return $this->total;
+    }
+
+    /**
+     * @param int $total
+     * @return ResponseMetadata
+     */
+    public function setTotal(int $total): ResponseMetadata
+    {
+        $this->total = $total;
+        return $this;
+    }
     /**
      * @return array
      */
@@ -167,12 +185,13 @@ class ResponseMetadata
         return array_merge([
             'version' => $apiSettings->getApplicationVersion(),
             'api' => $apiSettings->getApplicationName(),
-            'auth' => $apiSettings->getApplicationAuthVersion(),
+            'auth' => $apiSettings->getApplicationAuthString(),
             'success' => $this->isSuccess(),
             'error' => (! $this->isSuccess() ? [
                 'code' => $this->getErrorCode(),
                 'message' => $this->getErrorMessage()
             ] : null),
+            'total' => $this->getTotal()
         ], $this->getCustomMetadata());
     }
 }

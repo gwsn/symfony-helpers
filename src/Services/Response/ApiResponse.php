@@ -9,11 +9,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ApiResponse
 {
-    public array $responseData;
+    public ?array $responseData = [];
     public int $responseStatusCode;
     public array $responseHeaders;
     public ResponseMetadata $responseMetadata;
-    public ApiSettings $apiSettings;
 
 
     /**
@@ -21,21 +20,18 @@ class ApiResponse
      * @param int $status The response status code
      * @param array $headers The response headers
      * @param array $metadata Define custom metadata or overwrite the metadata keys
-     * @param ApiSettings|null $apiSettings
      */
     public function __construct(
         ?array $responseData = null,
         int $status = Response::HTTP_OK,
-        array $headers = [],
-        array $metadata = [],
-        ApiSettings $apiSettings = null
+        array $headers = []
     )
     {
         $this->setResponseData($responseData);
         $this->setResponseStatusCode($status);
         $this->setResponseHeaders($headers);
-        $this->setApiSettings(($apiSettings ?? $this->apiSettings = new ApiSettings(null)));
-        $this->setResponseMetadata(new ResponseMetadata($metadata, $this->getApiSettings()));
+
+        $this->setResponseMetadata(new ResponseMetadata(new ApiSettings));
 
         return $this->getResponse();
     }
@@ -44,6 +40,10 @@ class ApiResponse
      * @return Response
      */
     public function getResponse(): Response {
+        if($this->responseMetadata->getTotal() === null) {
+            $this->responseMetadata->setTotal(is_array($this->getResponseData()) ? count($this->getResponseData()) : 0);
+        }
+
         $data = [
             'data' => $this->getResponseData(),
             'meta' => $this->getResponseMetadata()->toArray(),
@@ -59,18 +59,18 @@ class ApiResponse
     }
 
     /**
-     * @return array
+     * @return array|null
      */
-    public function getResponseData(): array
+    public function getResponseData(): ?array
     {
         return $this->responseData;
     }
 
     /**
-     * @param array $responseData
+     * @param array|null $responseData
      * @return ApiResponse
      */
-    public function setResponseData(array $responseData): ApiResponse
+    public function setResponseData(?array $responseData): ApiResponse
     {
         $this->responseData = $responseData;
         return $this;
@@ -137,24 +137,6 @@ class ApiResponse
     public function setCustomMetadata(array $customMetadata): ApiResponse
     {
         $this->setCustomMetadata($customMetadata);
-        return $this;
-    }
-
-    /**
-     * @return ApiSettings
-     */
-    public function getApiSettings(): ApiSettings
-    {
-        return $this->responseMetadata->getApiSettings();
-    }
-
-    /**
-     * @param ApiSettings $apiSettings
-     * @return ApiResponse
-     */
-    public function setApiSettings(ApiSettings $apiSettings): ApiResponse
-    {
-        $this->responseMetadata->setApiSettings($apiSettings);
         return $this;
     }
 

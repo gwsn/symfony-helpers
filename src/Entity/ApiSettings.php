@@ -1,35 +1,46 @@
 <?php declare(strict_types=1);
 namespace GWSN\Helpers\Entity;
 
-use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class ApiSettings
+
+class ApiSettings implements ContainerAwareInterface
 {
-    const APP_NAME = 'application_name';
-    const APP_VERSION = 'application_version';
-    const API_VERSION = 'API_VERSION';
+    const CONFIG_KEY_APP_NAME = 'application_name';
+    const CONFIG_KEY_APP_VERSION = 'application_version';
+    const CONFIG_KEY_APP_AUTH_STRING = 'application_auth_string';
 
-    private string $applicationName;
-    private string $applicationVersion;
-    private string $applicationAuthVersion;
+    const DEFAULT_APP_NAME = 'Symfony API';
+    const DEFAULT_APP_VERSION = '1.0.0';
+    const DEFAULT_APP_AUTH_STRING = 'basic_auth';
 
+    private string $applicationName = self::DEFAULT_APP_NAME;
+    private string $applicationVersion = self::DEFAULT_APP_VERSION;
+    private string $applicationAuthString = self::DEFAULT_APP_AUTH_STRING;
 
-    public function __construct(?ContainerBagInterface $params = null) {
-        $this->applicationName = 'Symfony API';
-        $this->applicationVersion = '1.0.0';
-        $this->applicationAuthVersion = 'v1';
+    /** @var ContainerInterface */
+    private ContainerInterface $container;
 
-        if($params !== null) {
-            if($params->has(self::APP_NAME)) {
-                $this->setApplicationName($params->get(self::APP_NAME));
-            }
-            if($params->has(self::APP_VERSION)) {
-                $this->setApplicationVersion($params->get(self::APP_VERSION));
-            }
-            if($params->has(self::API_VERSION)) {
-                $this->setApplicationAuthVersion($params->get(self::API_VERSION));
-            }
+    public function __construct(?string $applicationName = null, ?string $applicationVersion = null, ?string $applicationAuthString = null) {
+
+        if($applicationName !== null) {
+            $this->setApplicationName($applicationName);
         }
+        if($applicationVersion !== null) {
+            $this->setApplicationVersion($applicationVersion);
+        }
+        if($applicationAuthString !== null) {
+            $this->setApplicationAuthString($applicationAuthString);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setContainer(?ContainerInterface $container = null)
+    {
+        $this->container = $container;
     }
 
     /**
@@ -71,18 +82,18 @@ class ApiSettings
     /**
      * @return string
      */
-    public function getApplicationAuthVersion(): string
+    public function getApplicationAuthString(): string
     {
-        return $this->applicationAuthVersion;
+        return $this->applicationAuthString;
     }
 
     /**
-     * @param string $applicationAuthVersion
+     * @param string $applicationAuthString
      * @return ApiSettings
      */
-    public function setApplicationAuthVersion(string $applicationAuthVersion): ApiSettings
+    public function setApplicationAuthString(string $applicationAuthString): ApiSettings
     {
-        $this->applicationAuthVersion = $applicationAuthVersion;
+        $this->applicationAuthString = $applicationAuthString;
         return $this;
     }
 }
