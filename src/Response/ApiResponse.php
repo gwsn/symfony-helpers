@@ -3,9 +3,11 @@ namespace GWSN\Helpers\Response;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+/**
+ * @deprecated please use GWSN\Helpers\Services\ApiResponse instead
+ */
 class ApiResponse extends JsonResponse
 {
-    private ApiSettings $apiSettings;
 
     /**
      * @param array|null $responseData
@@ -13,26 +15,20 @@ class ApiResponse extends JsonResponse
      * @param int $status The response status code
      * @param array $headers An array of response headers
      * @param array $metadata
-     * @param ApiSettings|null $apiSettings
      */
     public function __construct(
         $responseData = null,
         ResponseResult $responseResult = null,
         int $status = 200,
         array $headers = [],
-        array $metadata = [],
-        ApiSettings $apiSettings = null
+        array $metadata = []
     )
     {
-        if($apiSettings === null) {
-            $apiSettings = new ApiSettings(null);
-        }
-
 
         $metadata = array_merge([
-            'version' => $apiSettings->getApplicationVersion(),
-            'api' => $apiSettings->getApplicationName(),
-            'auth' => $apiSettings->getApplicationAuthVersion(),
+            'version' => '1.0.0',
+            'api' => 'Symfony Api',
+            'auth' => 'v1',
             'success' => $responseResult->isSuccess(),
             'error' => ($responseResult->isError() ? [
                 'code' => $responseResult->getErrorCode(),

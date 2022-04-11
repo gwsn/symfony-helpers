@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+        https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="symfony_helpers.api_settings" class="GWSN\Helpers\Entity\ApiSettings" public="true" shared="true" />
+        <service id="GWSN\Helpers\Entity\ApiSettings" alias="symfony_helpers.api_settings" public="false"/>
+
+        <service id="symfony_helpers.abstract_api_controller" class="GWSN\Helpers\Controller\AbstractApiController" public="true"/>
+        <service id="GWSN\Helpers\Controller\AbstractApiController" alias="symfony_helpers.abstract_api_controller" public="false"/>
+
+        <service id="symfony_helpers.api_response" class="GWSN\Helpers\Services\Response\ApiResponse"/>
+        <service id="GWSN\Helpers\Services\Response\ApiResponse" alias="symfony_helpers.api_response" public="false"/>
+    </services>
+</container>
