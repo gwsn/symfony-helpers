@@ -12,7 +12,7 @@ class ApiResponse
     public ?array $responseData = [];
     public int $responseStatusCode;
     public array $responseHeaders;
-    public ResponseMetadata $responseMetadata;
+    private ResponseMetadata $responseMetadata;
 
 
     /**
@@ -131,22 +131,12 @@ class ApiResponse
     }
 
     /**
-     * @param array $customMetadata
-     * @return ApiResponse
-     */
-    public function setCustomMetadata(array $customMetadata): ApiResponse
-    {
-        $this->setCustomMetadata($customMetadata);
-        return $this;
-    }
-
-    /**
      * @param bool $success
      * @return ApiResponse
      */
     public function setSuccess(bool $success): ApiResponse
     {
-        $this->responseMetadata->setSuccess($success);
+        $this->getResponseMetadata()->setSuccess($success);
         return $this;
     }
 
@@ -156,7 +146,7 @@ class ApiResponse
      */
     public function setMessage(string $message): ApiResponse
     {
-        $this->responseMetadata->setMessage($message);
+        $this->getResponseMetadata()->setMessage($message);
         return $this;
     }
 
@@ -167,10 +157,9 @@ class ApiResponse
      */
     public function setError(string $errorMessage = '', int $errorCode = Response::HTTP_INTERNAL_SERVER_ERROR): ApiResponse
     {
-        $this->responseMetadata
-            ->setSuccess(false)
-            ->setErrorMessage($errorMessage)
-            ->setErrorCode($errorCode);
+        $this->setSuccess(false)
+             ->setErrorMessage($errorMessage)
+             ->setErrorCode($errorCode);
 
         return $this;
     }
@@ -191,7 +180,11 @@ class ApiResponse
      */
     public function setErrorCode(int $errorCode): ApiResponse
     {
-        $this->responseMetadata->setErrorCode($errorCode);
+        if(key_exists($errorCode, Response::$statusTexts)) {
+            $this->setResponseStatusCode($errorCode);
+        }
+        
+        $this->getResponseMetadata()->setErrorCode($errorCode);
         return $this;
     }
 
@@ -201,7 +194,7 @@ class ApiResponse
      */
     public function setErrorMessage(string $errorMessage): ApiResponse
     {
-        $this->responseMetadata->setErrorMessage($errorMessage);
+        $this->getResponseMetadata()->setErrorMessage($errorMessage);
         return $this;
     }
 }

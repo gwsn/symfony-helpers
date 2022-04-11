@@ -17,10 +17,10 @@ abstract class AbstractApiController extends AbstractController
 {
 
     /**  @var ApiResponse|null $apiResponse */
-    protected ?ApiResponse $apiResponse = null;
+    private ?ApiResponse $apiResponse = null;
 
     /**  @var ResponseMetadata|null $responseMetadata */
-    protected ?ResponseMetadata $responseMetadata = null;
+    private ?ResponseMetadata $responseMetadata = null;
 
     public static function getSubscribedServices(): array
     {
