@@ -144,9 +144,9 @@ class ApiResponse
      * @param string $message
      * @return ApiResponse
      */
-    public function setMessage(string $message): ApiResponse
+    public function setInfo(string $message): ApiResponse
     {
-        $this->getResponseMetadata()->setMessage($message);
+        $this->getResponseMetadata()->setInfoMessage($message);
         return $this;
     }
 
