@@ -10,7 +10,7 @@ class ResponseMetadata
     public array $customMetadata;
     public ApiSettings $apiSettings;
 
-    public string $message = '';
+    public string $infoMessage = '';
     private bool $success = true;
     private int $errorCode = 0;
     private string $errorMessage = '';
@@ -103,18 +103,18 @@ class ResponseMetadata
     /**
      * @return string
      */
-    public function getMessage(): string
+    public function getInfoMessage(): string
     {
-        return $this->message;
+        return $this->infoMessage;
     }
 
     /**
-     * @param string $message
+     * @param string $infoMessage
      * @return ResponseMetadata
      */
-    public function setMessage(string $message): ResponseMetadata
+    public function setInfoMessage(string $infoMessage): ResponseMetadata
     {
-        $this->message = $message;
+        $this->infoMessage = $infoMessage;
         $this->setSuccess(true);
 
         return $this;
@@ -187,6 +187,7 @@ class ResponseMetadata
             'api' => $apiSettings->getApplicationName(),
             'auth' => $apiSettings->getApplicationAuthString(),
             'success' => $this->isSuccess(),
+            'info' => $this->getInfoMessage(),
             'error' => (! $this->isSuccess() ? [
                 'code' => $this->getErrorCode(),
                 'message' => $this->getErrorMessage()
