@@ -11,7 +11,10 @@
         <service id="symfony_helpers.abstract_api_controller" class="GWSN\Helpers\Controller\AbstractApiController" public="true"/>
         <service id="GWSN\Helpers\Controller\AbstractApiController" alias="symfony_helpers.abstract_api_controller" public="false"/>
 
-        <service id="symfony_helpers.api_response" class="GWSN\Helpers\Services\Response\ApiResponse"/>
-        <service id="GWSN\Helpers\Services\Response\ApiResponse" alias="symfony_helpers.api_response" public="false"/>
+        <service id="symfony_helpers.api_response_builder" class="GWSN\Helpers\Services\Response\ApiResponseBuilder"/>
+        <service id="GWSN\Helpers\Services\Response\ApiResponseBuilder" alias="symfony_helpers.api_response_builder" public="false"/>
+
+        <service id="symfony_helpers.api_response" class="GWSN\Helpers\Services\Entity\ApiResponse"/>
+        <service id="GWSN\Helpers\Services\Entity\ApiResponse" alias="symfony_helpers.api_response" public="false"/>
     </services>
 </container>
