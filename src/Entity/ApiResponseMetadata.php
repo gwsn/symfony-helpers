@@ -4,15 +4,27 @@ namespace GWSN\Helpers\Entity;
 
 use Symfony\Component\HttpFoundation\Response;
 
-class ResponseMetadata
+class ApiResponseMetadata
 {
+    /**@var int|null $total */
     public ?int $total = null;
+
+    /** @var array $customMetadata */
     public array $customMetadata;
+
+    /** @var ApiSettings $apiSettings */
     public ApiSettings $apiSettings;
 
-    public string $infoMessage = '';
+    /** @var string $infoMessage */
+    public string $infoMessage = 'none';
+
+    /** @var bool $success */
     private bool $success = true;
+
+    /** @var int $errorCode */
     private int $errorCode = 0;
+
+    /** @var string $errorMessage */
     private string $errorMessage = '';
 
 
@@ -39,13 +51,14 @@ class ResponseMetadata
 
     /**
      * @param int $total
-     * @return ResponseMetadata
+     * @return ApiResponseMetadata
      */
-    public function setTotal(int $total): ResponseMetadata
+    public function setTotal(int $total): ApiResponseMetadata
     {
         $this->total = $total;
         return $this;
     }
+
     /**
      * @return array
      */
@@ -56,9 +69,9 @@ class ResponseMetadata
 
     /**
      * @param array $customMetadata
-     * @return ResponseMetadata
+     * @return ApiResponseMetadata
      */
-    public function setCustomMetadata(array $customMetadata): ResponseMetadata
+    public function setCustomMetadata(array $customMetadata): ApiResponseMetadata
     {
         $this->customMetadata = $customMetadata;
         return $this;
@@ -74,9 +87,9 @@ class ResponseMetadata
 
     /**
      * @param ApiSettings $apiSettings
-     * @return ResponseMetadata
+     * @return ApiResponseMetadata
      */
-    public function setApiSettings(ApiSettings $apiSettings): ResponseMetadata
+    public function setApiSettings(ApiSettings $apiSettings): ApiResponseMetadata
     {
         $this->apiSettings = $apiSettings;
         return $this;
@@ -92,9 +105,9 @@ class ResponseMetadata
 
     /**
      * @param bool $success
-     * @return ResponseMetadata
+     * @return ApiResponseMetadata
      */
-    public function setSuccess(bool $success): ResponseMetadata
+    public function setSuccess(bool $success): ApiResponseMetadata
     {
         $this->success = $success;
         return $this;
@@ -110,9 +123,9 @@ class ResponseMetadata
 
     /**
      * @param string $infoMessage
-     * @return ResponseMetadata
+     * @return ApiResponseMetadata
      */
-    public function setInfoMessage(string $infoMessage): ResponseMetadata
+    public function setInfoMessage(string $infoMessage): ApiResponseMetadata
     {
         $this->infoMessage = $infoMessage;
         $this->setSuccess(true);
@@ -123,9 +136,9 @@ class ResponseMetadata
     /**
      * @param string $errorMessage
      * @param int $errorCode
-     * @return ResponseMetadata
+     * @return ApiResponseMetadata
      */
-    public function setError(string $errorMessage = '', int $errorCode = Response::HTTP_INTERNAL_SERVER_ERROR): ResponseMetadata
+    public function setError(string $errorMessage = '', int $errorCode = Response::HTTP_INTERNAL_SERVER_ERROR): ApiResponseMetadata
     {
         $this->setSuccess(false);
         $this->setErrorMessage($errorMessage);
@@ -143,9 +156,9 @@ class ResponseMetadata
 
     /**
      * @param int $errorCode
-     * @return ResponseMetadata
+     * @return ApiResponseMetadata
      */
-    public function setErrorCode(int $errorCode): ResponseMetadata
+    public function setErrorCode(int $errorCode): ApiResponseMetadata
     {
         $this->errorCode = $errorCode;
         if ($this->isSuccess()) {
@@ -164,9 +177,9 @@ class ResponseMetadata
 
     /**
      * @param string $errorMessage
-     * @return ResponseMetadata
+     * @return ApiResponseMetadata
      */
-    public function setErrorMessage(string $errorMessage): ResponseMetadata
+    public function setErrorMessage(string $errorMessage): ApiResponseMetadata
     {
         $this->errorMessage = $errorMessage;
         if ($this->isSuccess()) {

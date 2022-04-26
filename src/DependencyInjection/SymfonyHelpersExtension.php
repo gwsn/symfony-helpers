@@ -34,7 +34,7 @@ class SymfonyHelpersExtension extends Extension
     /**
      * @return string
      */
-    public function getAlias()
+    public function getAlias(): string
     {
         return self::CONFIG_KEY;
     }
