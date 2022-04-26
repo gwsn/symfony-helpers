@@ -19,8 +19,10 @@ abstract class AbstractApiController extends AbstractController
     private ?ApiResponseBuilder $arb = null;
 
     public function buildResponse() {
-        $this->setArb(new ApiResponseBuilder);
-        $this->arb->setApiSettings($this->getApiSettings());
+        if($this->arb === null) {
+            $this->setArb(new ApiResponseBuilder);
+            $this->arb->setApiSettings($this->getApiSettings());
+        }
     }
 
     /**
@@ -28,6 +30,8 @@ abstract class AbstractApiController extends AbstractController
      */
     public function getArb(): ?ApiResponseBuilder
     {
+        $this->buildResponse();
+
         return $this->arb;
     }
 
