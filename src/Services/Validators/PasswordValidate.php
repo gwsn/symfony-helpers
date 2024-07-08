@@ -13,13 +13,20 @@ class PasswordValidate
      */
     public static function validate(string $password, int $length): bool
     {
-        $uppercase = preg_match('/[A-Z]/', $password);
-        $lowercase = preg_match('/[a-z]/', $password);
-        $number    = preg_match('/[0-9]/', $password);
-        $specialChars = preg_match('/[^\w]/', $password);
-
-        if(!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < $length) {
-            throw new Exception('Password not valid', 400);
+        if (!preg_match("/[A-Z]/", $password)) {
+            throw new Exception("Password must contain at least one uppercase letter.", 400);
+        }
+        if (!preg_match("/[a-z]/", $password)) {
+            throw new Exception("Password must contain at least one lowercase letter.", 400);
+        }
+        if (!preg_match("/[0-9]/", $password)) {
+            throw new Exception("Password must contain at least one digit.", 400);
+        }
+        if (!preg_match("/\W/", $password)) {
+            throw new Exception("Password must contain at least one special character.", 400);
+        }
+        if (strlen($password) < $length) {
+            throw new Exception("Password must be at least 8 characters long.", 400);
         }
 
         return true;
